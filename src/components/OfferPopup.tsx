@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-
+import offerImage from "../Offer_poster_img/Republic-day-offer.png";
 interface OfferPopupProps {
   onClose: () => void;
 }
@@ -19,7 +19,7 @@ export default function OfferPopup({ onClose }: OfferPopupProps) {
 
         {/* Poster image */}
         <img
-          src="src/Offer_poster_img/Republic-day-offer.png" 
+          src={offerImage} 
           alt="Republic Day Offer"
           className="w-full h-auto"
         />
