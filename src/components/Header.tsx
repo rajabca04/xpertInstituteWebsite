@@ -21,7 +21,7 @@ export default function Header() {
   const [loading, setLoading] = useState(false);
 
   // ✅ Array of allowed passcodes
-  const allowedPasscodes = ["raja@9065135324", "roshan@7717784838", "saurabh@7979712231"]; // add more passcodes here
+  const allowedPasscodes = ["raja@9065135324", "roshan@7717784838", "saurabh@7979712231", "niraj@8540092869"]; // add more passcodes here
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
