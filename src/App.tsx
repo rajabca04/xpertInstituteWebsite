@@ -48,7 +48,6 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       {showOffer && <OfferPopup onClose={() => setShowOffer(false)} />}
-
       <Header />
       <Hero />
       <Courses />

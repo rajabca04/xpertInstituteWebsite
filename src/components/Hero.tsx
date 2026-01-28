@@ -1,12 +1,7 @@
 import { Award, BookOpen, Users } from 'lucide-react';
 
 export default function Hero() {
-  const scrollToEnroll = () => {
-    const element = document.getElementById('enroll');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+
 
   return (
     <section id="home" className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-white to-blue-50">
