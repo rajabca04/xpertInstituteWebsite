@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  CheckCircle,
-  Loader2,
-  UserPlus,
-  BookOpen,
-} from "lucide-react";
+import { CheckCircle, Loader2, UserPlus, BookOpen } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
 /* ================= TYPES ================= */
@@ -45,7 +40,7 @@ interface FormData {
   admission_session: string;
 }
 
-const courses = ["BCA", "MCA", "BA", "BS", "MA", "MBA", "MS", "BLIS", "MLIS"];
+const courses = ["BCA", "MCA", "BA", "BS", "MA", "MBA", "MS", "BLIS", "MLIS", "BBA", "B.Com", "M.Com", "B.Sc", "M.Sc","B.ed","D.lid","M.ed", "PGDCA","B.pharma","D.pharma","M.pharma","PHD"];
 
 /* ================= REUSABLE UI ================= */
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
@@ -73,9 +68,7 @@ const Textarea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
 const Section = ({ title, children }: { title: string; children: any }) => (
   <div className="rounded-xl border border-gray-200 bg-gray-50 p-6 space-y-4">
     <h4 className="text-lg font-semibold text-blue-700">{title}</h4>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {children}
-    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{children}</div>
   </div>
 );
 
@@ -122,33 +115,58 @@ export default function EnrollmentForm() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  const payload = {
-    ...formData,
-    created_at: new Date().toISOString() // automatically add current timestamp
+    const requiredFields = [
+      "student_name",
+      "father_name",
+      "mother_name",
+      "dob",
+      "aadhar_number",
+      "mobile",
+      "father_mobile",
+      "email",
+      "category",
+      "tenth_passing_year",
+      "tenth_board",
+      "tenth_marks",
+      "tenth_percent",
+      "twelfth_passing_year",
+      "twelfth_board",
+      "twelfth_marks",
+      "twelfth_percent",
+    ];
+
+    for (const field of requiredFields) {
+      if (!formData[field as keyof FormData]) {
+        alert("Please fill all mandatory fields before submitting.");
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    const { error } = await supabase
+      .from("student_enrollments")
+      .insert([{ ...formData, created_at: new Date().toISOString() }]);
+
+    if (error) {
+      alert(error.message);
+    } else {
+      setIsSuccess(true);
+    }
+
+    setIsSubmitting(false);
   };
-
-  const { error } = await supabase
-    .from("student_enrollments")
-    .insert([payload]);
-
-  if (error) {
-    alert(error.message);
-  } else {
-    setIsSuccess(true);
-  }
-
-  setIsSubmitting(false);
-};
 
   /* ================= SUCCESS SCREEN ================= */
   if (isSuccess) {
@@ -169,8 +187,10 @@ const handleSubmit = async (e: React.FormEvent) => {
   /* ================= FORM ================= */
   return (
     <form
+
+      id="enroll"
       onSubmit={handleSubmit}
-      className="max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-2xl space-y-6"
+      className=" scroll-mt-28 max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-2xl space-y-6"
     >
       <div className="flex items-center gap-3">
         <UserPlus className="w-8 h-8 text-blue-600" />
@@ -178,68 +198,162 @@ const handleSubmit = async (e: React.FormEvent) => {
       </div>
 
       <Section title="Personal Details">
-        <Input name="student_name" placeholder="Student Name" onChange={handleChange} />
-        <Input name="father_name" placeholder="Father Name" onChange={handleChange} />
-        <Input name="mother_name" placeholder="Mother Name" onChange={handleChange} />
-        <Input type="date" name="dob" onChange={handleChange} />
-        <Input name="aadhar_number" placeholder="Aadhar Number" onChange={handleChange} />
+        <Input
+          name="student_name"
+          placeholder="Student Name"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="father_name"
+          placeholder="Father Name"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="mother_name"
+          placeholder="Mother Name"
+          required
+          onChange={handleChange}
+        />
+        <Input type="date" name="dob" required onChange={handleChange} />
+        <Input
+          name="aadhar_number"
+          placeholder="Aadhar Number"
+          required
+          onChange={handleChange}
+        />
       </Section>
 
       <Section title="Contact Details">
-        <Input name="mobile" placeholder="Mobile Number" onChange={handleChange} />
-        <Input name="alternate_mobile" placeholder="Alternate Mobile" onChange={handleChange} />
-        <Input name="father_mobile" placeholder="Father Mobile" onChange={handleChange} />
-        <Input name="email" placeholder="Email ID" onChange={handleChange} />
+        <Input
+          name="mobile"
+          placeholder="Mobile Number"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="alternate_mobile"
+          placeholder="Alternate Mobile"
+          onChange={handleChange}
+        />
+        <Input
+          name="father_mobile"
+          placeholder="Father Mobile"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="email"
+          placeholder="Email ID"
+          type="email"
+          required
+          onChange={handleChange}
+        />
       </Section>
 
       <Section title="Address Details">
-        <Textarea name="address" placeholder="Complete Address" onChange={handleChange} />
+        <Textarea
+          name="address"
+          placeholder="Complete Address"
+          onChange={handleChange}
+        />
         <Input name="district" placeholder="District" onChange={handleChange} />
         <Input name="pincode" placeholder="Pin Code" onChange={handleChange} />
         <Input name="state" placeholder="State" onChange={handleChange} />
       </Section>
 
       <Section title="10th Academic Details">
-        <Input name="tenth_passing_year" placeholder="Passing Year" onChange={handleChange} />
-        <Input name="tenth_board" placeholder="Board" onChange={handleChange} />
-        <Input name="tenth_marks" placeholder="Marks" onChange={handleChange} />
-        <Input name="tenth_percent" placeholder="Percentage %" onChange={handleChange} />
+        <Input
+          name="tenth_passing_year"
+          placeholder="Passing Year"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="tenth_board"
+          placeholder="Board"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="tenth_marks"
+          placeholder="Marks"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="tenth_percent"
+          placeholder="Percentage %"
+          required
+          onChange={handleChange}
+        />
       </Section>
 
       <Section title="12th Academic Details">
-        <Input name="twelfth_passing_year" placeholder="Passing Year" onChange={handleChange} />
-        <Input name="twelfth_board" placeholder="Board" onChange={handleChange} />
-        <Input name="twelfth_marks" placeholder="Marks" onChange={handleChange} />
-        <Input name="twelfth_percent" placeholder="Percentage %" onChange={handleChange} />
+        <Input
+          name="twelfth_passing_year"
+          placeholder="Passing Year"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="twelfth_board"
+          placeholder="Board"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="twelfth_marks"
+          placeholder="Marks"
+          required
+          onChange={handleChange}
+        />
+        <Input
+          name="twelfth_percent"
+          placeholder="Percentage %"
+          required
+          onChange={handleChange}
+        />
       </Section>
 
       <Section title="Graduation Details">
-        <Input name="graduation_passing_year" placeholder="Passing Year" onChange={handleChange} />
-        <Input name="graduation_university" placeholder="University" onChange={handleChange} />
-        <Input name="graduation_marks" placeholder="Marks" onChange={handleChange} />
-        <Input name="graduation_percent" placeholder="Percentage %" onChange={handleChange} />
+        <Input
+          name="graduation_passing_year"
+          placeholder="Passing Year"
+          onChange={handleChange}
+        />
+        <Input
+          name="graduation_university"
+          placeholder="University"
+          onChange={handleChange}
+        />
+        <Input
+          name="graduation_marks"
+          placeholder="Marks"
+          onChange={handleChange}
+        />
+        <Input
+          name="graduation_percent"
+          placeholder="Percentage %"
+          onChange={handleChange}
+        />
       </Section>
       <Section title="Category">
-  <div className="relative">
-    <select
-      name="category"
-      onChange={handleChange}
-      className="
-        w-full rounded-md border border-gray-300 bg-white py-2 px-4
-        text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-        outline-none transition
-      "
-    >
-      <option value="">Select Category</option>
-      <option value="General">General</option>
-      <option value="OBC">OBC</option>
-      <option value="SC">SC</option>
-      <option value="ST">ST</option>
-      <option value="EBC">EBC</option>
-    </select>
-  </div>
-</Section>
-
+        <select
+          name="category"
+          required
+          onChange={handleChange}
+          className="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm"
+        >
+          <option value="">Select Category</option>
+          <option value="General">General</option>
+          <option value="OBC">OBC</option>
+          <option value="SC">SC</option>
+          <option value="ST">ST</option>
+          <option value="EBC">EBC</option>
+        </select>
+      </Section>
 
       <Section title="Course & Admission Session">
         <div className="relative">
@@ -255,7 +369,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             "
           >
             <option value="">Select Course</option>
-            {courses.map(course => (
+            {courses.map((course) => (
               <option key={course} value={course}>
                 {course}
               </option>
