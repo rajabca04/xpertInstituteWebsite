@@ -1,23 +1,9 @@
-import { GraduationCap, Menu, X, Lock } from "lucide-react";
+import { GraduationCap, Menu, Lock } from "lucide-react";
 import { useState } from "react";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-import { supabase } from "../lib/supabase";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [passcode, setPasscode] = useState("");
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  // ✅ Array of allowed passcodes
-  const allowedPasscodes = [
-    "raja@9065135324",
-    "roshan@7717784838",
-    "saurabh@7979712231",
-    "niraj@8540092869",
-  ]; // add more passcodes here
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -27,174 +13,93 @@ export default function Header() {
     }
   };
 
-  const handlePasscodeSubmit = () => {
-    if (allowedPasscodes.includes(passcode)) {
-      setIsAuthorized(true);
-      setPasscode("");
-      downloadReport(); // automatically download after correct passcode
-    } else {
-      alert(
-        "Incorrect passcode! Try again. This is only for authorized personnel.",
-      );
-      setIsAuthorized(false);
-      setPasscode("");
-    }
-  };
-
-  const downloadReport = async () => {
-    setLoading(true);
-
-    const { data, error } = await supabase
-      .from("student_enrollments")
-      .select("*")
-      // .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Error fetching data:", error.message);
-      alert("Failed to fetch data");
-      setLoading(false);
-      return;
-    }
-
-    console.log(data)
-    const worksheet = XLSX.utils.json_to_sheet(data || []);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Enrollments");
-
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-    const blob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    saveAs(blob, "student_enrollments.xlsx");
-    setLoading(false);
-    alert("Report downloaded successfully!");
-    setIsModalOpen(false);
-    setIsAuthorized(false);
-  };
-
   return (
     <header className="bg-white shadow-md fixed w-full top-0 z-50">
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <GraduationCap className="w-10 h-10 text-blue-600" />
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Xpert Institute
-              </h1>
-              <p className="text-xs text-gray-600">
-                Empowering Education Since 2016
-              </p>
-            </div>
+      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center space-x-3">
+          <GraduationCap className="w-10 h-10 text-blue-600" />
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Xpert Institute</h1>
+            <p className="text-xs text-gray-600">Empowering Education Since 2016</p>
           </div>
-
-          <div className="hidden md:flex space-x-8 items-center">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("courses")}
-              className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-            >
-              Courses
-            </button>
-            <button
-              onClick={() => scrollToSection("partners")}
-              className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-            >
-              Partners
-            </button>
-            <button
-              onClick={() => scrollToSection("testimonials")}
-              className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-            >
-              Testimonials
-            </button>
-            <button
-              onClick={() => scrollToSection("certificates")}
-              className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-            >
-              Certificates
-            </button>
-            <button
-              onClick={() => scrollToSection("enroll")}
-              className="block w-full bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-            >
-              Enroll Now
-            </button>
-            {/* <button
-              onClick={() => setIsModalOpen(true)}
-              className="flex items-center bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
-            >
-              <Lock className="w-4 h-4 mr-2" />
-              Get Report
-            </button> */}
-          </div>
-
-          <button
-            className="md:hidden text-gray-700"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
         </div>
 
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-3">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="block w-full text-left text-gray-700 hover:text-blue-600 py-2 font-medium"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("courses")}
-              className="block w-full text-left text-gray-700 hover:text-blue-600 py-2 font-medium"
-            >
-              Courses
-            </button>
-            <button
-              onClick={() => scrollToSection("partners")}
-              className="block w-full text-left text-gray-700 hover:text-blue-600 py-2 font-medium"
-            >
-              Partners
-            </button>
-            <button
-              onClick={() => scrollToSection("testimonials")}
-              className="block w-full text-left text-gray-700 hover:text-blue-600 py-2 font-medium"
-            >
-              Testimonials
-            </button>
-            <button
-              onClick={() => scrollToSection("certificates")}
-              className="block w-full text-left text-gray-700 hover:text-blue-600 py-2 font-medium"
-            >
-              Certificates
-            </button>
-            <button
-              onClick={() => scrollToSection("enroll")}
-              className="block w-full bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-6">
+          <div className="flex space-x-4">
+            {["home", "courses", "partners", "testimonials", "certificates"].map(
+              (section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className="text-gray-700 hover:text-blue-600 transition-colors font-semibold"
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </button>
+              )
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex space-x-4">
+            <Link
+              to="/enroll-student"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               Enroll Now
-            </button>
+            </Link>
 
-            
+            <Link
+              to="/admin-dashbord"
+              className="flex items-center gap-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-colors font-medium"
+            >
+              <Lock className="w-4 h-4" />
+              Admin
+            </Link>
           </div>
-        )}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-gray-700"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <Menu className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
       </nav>
 
-    
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white px-4 pb-4 space-y-3">
+          {["home", "courses", "partners", "testimonials", "certificates"].map(
+            (section) => (
+              <button
+                key={section}
+                onClick={() => scrollToSection(section)}
+                className="block w-full text-left text-gray-700 hover:text-blue-600 py-2 font-semibold"
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </button>
+            )
+          )}
+
+          <Link
+            to="/enroll-student"
+            className="block w-full text-center bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            Enroll Now
+          </Link>
+
+          <Link
+            to="/admin-dashbord"
+            className="flex items-center justify-center w-full gap-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition-colors font-medium"
+          >
+            <Lock className="w-4 h-4" />
+            Admin
+          </Link>
+        </div>
+      )}
     </header>
   );
 }

@@ -131,24 +131,23 @@ export default function StudentEnrollments() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* HEADER */}
       <header className="flex items-center justify-between px-6 py-4 border-b dark:border-gray-700">
-        <h1 className="text-xl font-bold">Xpert Institute – Admin</h1>
+        <h1 className="text-xl font-bold">Enrollments</h1>
         {/* SEARCH */}
         <div className="flex justify-center items-center gap-4">
-            <div className="px-6 mb-4">
-          <div className="relative border-blue-500">
-            <Search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-            <input
-              value={search}
-              onChange={(e) => {
-                setPage(1);
-                setSearch(e.target.value);
-              }}
-              placeholder="Search student..."
-              className="w-full pl-10 p-2 rounded border dark:bg-gray-800"
-            />
+          <div className="px-6 mb-4">
+            <div className="relative border-blue-500">
+              <Search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <input
+                value={search}
+                onChange={(e) => {
+                  setPage(1);
+                  setSearch(e.target.value);
+                }}
+                placeholder="Search student..."
+                className="w-full pl-10 p-2 rounded border dark:bg-gray-800"
+              />
+            </div>
           </div>
-        </div>
-       
         </div>
       </header>
 
@@ -158,121 +157,120 @@ export default function StudentEnrollments() {
         <Stat icon={<Folder />} label="Total Files" value={totalFiles} />
       </div>
 
-    {/* LIST */}
-<div className="px-4 sm:px-6 space-y-4">
-  {loading && <Loader2 className="animate-spin mx-auto" />}
+      {/* LIST */}
+      <div className="px-4 sm:px-6 space-y-4">
+        {loading && <Loader2 className="animate-spin mx-auto" />}
 
-  {students.map((s) => (
-    <div
-      key={s.id}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border dark:border-gray-700 overflow-hidden"
-    >
-      {/* HEADER */}
-      <div
-        onClick={() => {
-          setExpandedId(expandedId === s.id ? null : s.id);
-          if (!filesMap[s.id]) fetchFiles(s.id);
-        }}
-        className="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-      >
-        <div>
-          <p className="font-semibold text-gray-800 dark:text-gray-100">
-            {s.student_name}
-          </p>
-          <p className="text-xs sm:text-sm text-gray-500">
-            {s.course} • {s.mobile} • {s.father_name}
-          </p>
-        </div>
-
-        <ChevronDown
-          className={`transition-transform ${
-            expandedId === s.id ? "rotate-180" : ""
-          }`}
-        />
-      </div>
-
-      {/* CONTENT */}
-      {expandedId === s.id && (
-        <div className="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-          {loadingMap[s.id] ? (
-            <Loader2 className="animate-spin mx-auto" />
-          ) : (
-            <>
-              {/* FILE GRID */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filesMap[s.id]?.map((f) => {
-                  const url = getUrl(f.file_url);
-                  const isImage = f.file_type.includes("image");
-                  const isPdf = f.file_type.includes("pdf");
-
-                  return (
-                    <div
-                      key={f.id}
-                      className="bg-white dark:bg-gray-800 rounded-lg shadow p-2 flex flex-col"
-                    >
-                      {/* PREVIEW */}
-                      {isImage ? (
-                        <img
-                          src={url}
-                          loading="lazy"
-                          className="h-28 w-full object-cover rounded"
-                        />
-                      ) : (
-                        <iframe
-                          src={url}
-                          className="h-28 w-full rounded bg-white"
-                        />
-                      )}
-
-                      {/* ACTIONS */}
-                      <div className="flex gap-2 mt-2">
-                        {/* VIEW */}
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 text-center text-xs sm:text-sm bg-blue-600 text-white py-1 rounded hover:bg-blue-700 transition"
-                        >
-                          👁️ View
-                        </a>
-
-                        {/* DOWNLOAD */}
-                        <a
-                          href={url}
-                          download
-                          className="flex-1 text-center text-xs sm:text-sm bg-green-600 text-white py-1 rounded hover:bg-green-700 transition"
-                        >
-                          ⬇️ Download
-                        </a>
-                      </div>
-                    </div>
-                  );
-                })}
+        {students.map((s) => (
+          <div
+            key={s.id}
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border dark:border-gray-700 overflow-hidden"
+          >
+            {/* HEADER */}
+            <div
+              onClick={() => {
+                setExpandedId(expandedId === s.id ? null : s.id);
+                if (!filesMap[s.id]) fetchFiles(s.id);
+              }}
+              className="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            >
+              <div>
+                <p className="font-semibold text-gray-800 dark:text-gray-100">
+                  {s.student_name}
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {s.course} • {s.mobile} • {s.father_name}
+                </p>
               </div>
 
-              {/* DOWNLOAD ALL */}
-              {
-                filesMap[s.id] && filesMap[s.id].length > 0 ? (
-                <div className="mt-4 text-center">
-                  <button
-                    onClick={() => downloadAll(s.id)}
-                    className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-                  >
-                    ⬇️ Download All Files
-                  </button>
-                </div>
-              ) : (
-                <p className="text-gray-600 text-center">No files uploaded</p>
-              )
-            }        
-              
-            </>
-          )}
-        </div>
-      )}
-    </div>
-  ))}
-</div>
+              <ChevronDown
+                className={`transition-transform ${
+                  expandedId === s.id ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+
+            {/* CONTENT */}
+            {expandedId === s.id && (
+              <div className="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                {loadingMap[s.id] ? (
+                  <Loader2 className="animate-spin mx-auto" />
+                ) : (
+                  <>
+                    {/* FILE GRID */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {filesMap[s.id]?.map((f) => {
+                        const url = getUrl(f.file_url);
+                        const isImage = f.file_type.includes("image");
+                        const isPdf = f.file_type.includes("pdf");
+
+                        return (
+                          <div
+                            key={f.id}
+                            className="bg-white dark:bg-gray-800 rounded-lg shadow p-2 flex flex-col"
+                          >
+                            {/* PREVIEW */}
+                            {isImage ? (
+                              <img
+                                src={url}
+                                loading="lazy"
+                                className="h-28 w-full object-cover rounded"
+                              />
+                            ) : (
+                              <iframe
+                                src={url}
+                                className="h-28 w-full rounded bg-white"
+                              />
+                            )}
+
+                            {/* ACTIONS */}
+                            <div className="flex gap-2 mt-2">
+                              {/* VIEW */}
+                              <a
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 text-center text-xs sm:text-sm bg-blue-600 text-white py-1 rounded hover:bg-blue-700 transition"
+                              >
+                                👁️ View
+                              </a>
+
+                              {/* DOWNLOAD */}
+                              <a
+                                href={url}
+                                download
+                                className="flex-1 text-center text-xs sm:text-sm bg-green-600 text-white py-1 rounded hover:bg-green-700 transition"
+                              >
+                                ⬇️ Download
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* DOWNLOAD ALL */}
+                    {filesMap[s.id] && filesMap[s.id].length > 0 ? (
+                      <div className="mt-4 text-center">
+                        <button
+                          onClick={() => downloadAll(s.id)}
+                          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+                        >
+                          ⬇️ Download All Files
+                        </button>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 text-center">
+                        No files uploaded
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
       {/* PAGINATION */}
       <div className="flex justify-center gap-2 p-6 flex-wrap">

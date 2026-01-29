@@ -20,7 +20,7 @@ const sidebarItems = [
 
 export default function Sidebar({ active, onChange }: SidebarProps) {
   return (
-    <aside className="w-64 bg-blue-700 text-white flex flex-col">
+    <aside className="w-64 bg-blue-700 text-white flex flex-col h-screen fixed md:relative z-40">
       {/* LOGO */}
       <div className="flex items-center justify-center h-20 border-b border-blue-600">
         <h1 className="text-xl font-bold">Xpert Institute</h1>

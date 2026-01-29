@@ -54,7 +54,7 @@ function App() {
       <Partners />
       <Testimonials />
       <Certificates />
-      <EnrollmentForm />
+      {/* <EnrollmentForm /> */}
       <Footer />
     </div>
   );

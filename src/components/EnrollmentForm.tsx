@@ -312,7 +312,7 @@ export default function EnrollmentForm() {
     >
       <div className="flex items-center gap-3">
         <UserPlus className="w-8 h-8 text-blue-600" />
-        <h2 className="text-2xl font-bold">Student Admission Form</h2>
+        <h2 className="text-2xl font-bold">Student Enrollment Form - Xpert Institute </h2>
       </div>
 
       {/* ================= PERSONAL DETAILS ================= */}
