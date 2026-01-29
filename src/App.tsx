@@ -19,12 +19,12 @@ function App() {
 
   // ✅ Show popup on page load (once per session)
   useEffect(() => {
-    const hasSeenOffer = sessionStorage.getItem("offer_seen");
+    // const hasSeenOffer = sessionStorage.getItem("offer_seen");
 
-    if (!hasSeenOffer) {
+    // if (!hasSeenOffer) {
       setShowOffer(true);
-      sessionStorage.setItem("offer_seen", "true");
-    }
+      // sessionStorage.setItem("offer_seen", "true");
+    // }
   }, []);
 
   // Supabase test
