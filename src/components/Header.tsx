@@ -129,13 +129,13 @@ export default function Header() {
             >
               Enroll Now
             </button>
-            <button
+            {/* <button
               onClick={() => setIsModalOpen(true)}
               className="flex items-center bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
             >
               <Lock className="w-4 h-4 mr-2" />
               Get Report
-            </button>
+            </button> */}
           </div>
 
           <button
@@ -189,60 +189,12 @@ export default function Header() {
               Enroll Now
             </button>
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="block w-full flex items-center justify-center bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
-            >
-              <Lock className="w-4 h-4 mr-2" /> Get Report
-            </button>
+            
           </div>
         )}
       </nav>
 
-      {/* Passcode Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-80">
-            <h2 className="text-xl font-bold mb-4">Enter Passcode</h2>
-            {!isAuthorized ? (
-              <>
-                <input
-                  type="password"
-                  value={passcode}
-                  onChange={(e) => setPasscode(e.target.value)}
-                  placeholder="Enter passcode"
-                  className="w-full border border-gray-300 p-2 rounded mb-4 focus:outline-none focus:border-blue-600"
-                  onKeyDown={(e) => e.key === "Enter" && handlePasscodeSubmit()}
-                />
-                <div className="flex justify-end space-x-2">
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handlePasscodeSubmit}
-                    className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                {loading ? (
-                  <p>Downloading report...</p>
-                ) : (
-                  <p className="text-green-600 font-medium">
-                    ✅ Report is downloading...
-                  </p>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      )}
+    
     </header>
   );
 }

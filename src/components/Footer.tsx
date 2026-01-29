@@ -7,25 +7,74 @@ import {
   Twitter,
   Linkedin,
   Instagram,
-} from 'lucide-react';
+} from "lucide-react";
+import { useState } from "react";
+import { X } from "lucide-react";
 
 export default function Footer() {
+  type PolicyType = "privacy" | "terms" | "refund" | null;
+
+  const [openPolicy, setOpenPolicy] = useState<PolicyType>(null);
+
+  const policyContent = {
+    privacy: {
+      title: "Privacy Policy",
+      content: `
+At Xpert Institute, we respect your privacy and are committed to protecting your personal information.
+We collect basic details such as name, phone number, email address, and course preferences only for
+admission, communication, and academic purposes.
+
+Your data is never sold, shared, or misused with third parties. All uploaded documents, images, and
+certificates are securely stored and accessed only by authorized administrators. We implement industry-
+standard security practices to protect your information from unauthorized access.
+
+By using our platform, you agree to the collection and use of information as outlined in this policy.
+We may update this policy from time to time, and any changes will be reflected on this page.
+      `,
+    },
+    terms: {
+      title: "Terms of Service",
+      content: `
+By accessing Xpert Institute services, you agree to follow our terms and conditions.
+All course materials, content, and resources provided are for educational purposes only and
+may not be redistributed without permission.
+
+Students must provide accurate information during enrollment. Any misuse of the platform,
+including false data submission or unauthorized access, may lead to account suspension.
+
+Xpert Institute reserves the right to modify courses, fees, schedules, or policies at any time.
+Continued use of our services indicates acceptance of these terms.
+      `,
+    },
+    refund: {
+      title: "Refund Policy",
+      content: `
+Xpert Institute follows a transparent and fair refund policy.
+Refund requests must be submitted within the specified period after enrollment.
+
+Refunds are processed only if the student has not accessed a significant portion of the course
+or violated institute policies. Administrative and registration fees may be non-refundable.
+
+Approved refunds will be processed within 7–10 working days via the original payment method.
+The institute reserves the right to deny refunds in cases of misuse or policy violation.
+      `,
+    },
+  };
+
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative bg-gray-900 text-white pt-20 pb-8 overflow-hidden">
       {/* ✅ WATERMARK */}
-     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-  <h1 className="whitespace-nowrap rotate-[-8deg] text-[70px] md:text-[110px] font-extrabold text-white/5 tracking-widest select-none">
-    XPERT INSTITUTE
-  </h1>
-</div>
-
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <h1 className="whitespace-nowrap rotate-[-8deg] text-[70px] md:text-[110px] font-extrabold text-white/5 tracking-widest select-none">
+          XPERT INSTITUTE
+        </h1>
+      </div>
 
       <div className="relative container mx-auto px-4">
         {/* Top Grid */}
         <div className="grid md:grid-cols-4 gap-12 mb-16">
-
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-5">
@@ -37,8 +86,8 @@ export default function Footer() {
             </div>
 
             <p className="text-gray-400 leading-relaxed mb-6">
-              Providing quality education through authorized university programs since 2010.
-              Your success is our mission.
+              Providing quality education through authorized university programs
+              since 2010. Your success is our mission.
             </p>
 
             <div className="flex space-x-4">
@@ -61,16 +110,18 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                ['Home', 'home'],
-                ['Courses', 'courses'],
-                ['University Partners', 'partners'],
-                ['Testimonials', 'testimonials'],
-                ['Enroll Now', 'enroll'],
+                ["Home", "home"],
+                ["Courses", "courses"],
+                ["University Partners", "partners"],
+                ["Testimonials", "testimonials"],
+                ["Enroll Now", "enroll"],
               ].map(([label, id]) => (
                 <li key={id}>
                   <button
                     onClick={() =>
-                      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+                      document
+                        .getElementById(id)
+                        ?.scrollIntoView({ behavior: "smooth" })
                     }
                     className="text-gray-400 hover:text-blue-400 transition-colors"
                   >
@@ -114,7 +165,7 @@ export default function Footer() {
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400 mt-1" />
                 <span className="text-gray-400">
-                  Near Bank of India, Jankinagar, Banmankhi, Bihar 854202
+                  Near Bank of India, Banmankhi, Bihar 854202
                 </span>
               </li>
 
@@ -124,17 +175,29 @@ export default function Footer() {
                   href="tel:+919065135324"
                   className="text-gray-400 hover:text-blue-400"
                 >
-                  +91 9065135324
+                  9065135324
+                </a>
+                <a
+                  href="tel:+917717784838"
+                  className="text-gray-400 hover:text-blue-400"
+                >
+                  7717784838
+                </a>
+                <a
+                  href="tel:+9179797712231"
+                  className="text-gray-400 hover:text-blue-400"
+                >
+                  79797712231
                 </a>
               </li>
 
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-400" />
                 <a
-                  href="mailto:xpertinsitute.help@gmail.com"
+                  href="mailto:xpertinstitute.help@gmail.com"
                   className="text-gray-400 hover:text-blue-400"
                 >
-                  xpertinsitute.help@gmail.com
+                  xpertinstitute.help@gmail.com
                 </a>
               </li>
             </ul>
@@ -148,17 +211,64 @@ export default function Footer() {
               © {currentYear} Xpert Institute. All rights reserved.
             </p>
 
-            <div className="flex space-x-6 text-sm">
-              {['Privacy Policy', 'Terms of Service', 'Refund Policy'].map((item) => (
-                <a
-                  key={item}
-                  href="#"
+            <p className="text-gray-500 text-sm">
+              - : Design & Developed by Xpert Software Solutions : -
+            </p>
+
+            <>
+              {/* Footer Links */}
+              <div className="flex space-x-6 text-sm">
+                <button
+                  onClick={() => setOpenPolicy("privacy")}
                   className="text-gray-500 hover:text-blue-400 transition-colors"
                 >
-                  {item}
-                </a>
-              ))}
-            </div>
+                  Privacy Policy
+                </button>
+                <button
+                  onClick={() => setOpenPolicy("terms")}
+                  className="text-gray-500 hover:text-blue-400 transition-colors"
+                >
+                  Terms of Service
+                </button>
+                <button
+                  onClick={() => setOpenPolicy("refund")}
+                  className="text-gray-500 hover:text-blue-400 transition-colors"
+                >
+                  Refund Policy
+                </button>
+              </div>
+
+              {/* Popup Modal */}
+              {openPolicy && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                  <div className="bg-white max-w-lg w-full rounded-xl shadow-lg p-6 relative">
+                    <button
+                      onClick={() => setOpenPolicy(null)}
+                      className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+                    >
+                      <X size={20} />
+                    </button>
+
+                    <h2 className="text-xl font-semibold mb-4 text-blue-600">
+                      {policyContent[openPolicy].title}
+                    </h2>
+
+                    <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                      {policyContent[openPolicy].content}
+                    </p>
+
+                    <div className="mt-6 text-right">
+                      <button
+                        onClick={() => setOpenPolicy(null)}
+                        className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           </div>
         </div>
       </div>
