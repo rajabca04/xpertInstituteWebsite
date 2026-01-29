@@ -138,7 +138,6 @@ export default function EnrollmentForm() {
     twelfth_marksheet: null,
     graduation_marksheet: null,
     signature_photo: null,
-    // fee_screenshot: null,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -159,11 +158,11 @@ export default function EnrollmentForm() {
     if (!e.target.files || e.target.files.length === 0) return;
     const file = e.target.files[0];
 
-    if (e.target.name === "passport_photo" && file.size > 200 * 1024) {
-      alert("Passport photo must be less than 200KB");
-      e.target.value = "";
-      return;
-    }
+    // if (e.target.name === "passport_photo" && file.size > 200 * 1024) {
+    //   alert("Passport photo must be less than 200KB");
+    //   e.target.value = "";
+    //   return;
+    // }
 
     setFilesData((prev) => ({ ...prev, [e.target.name]: file }));
   };
@@ -312,7 +311,9 @@ export default function EnrollmentForm() {
     >
       <div className="flex items-center gap-3">
         <UserPlus className="w-8 h-8 text-blue-600" />
-        <h2 className="text-2xl font-bold">Student Enrollment Form - Xpert Institute </h2>
+        <h2 className="text-2xl font-bold">
+          Student Enrollment Form - Xpert Institute{" "}
+        </h2>
       </div>
 
       {/* ================= PERSONAL DETAILS ================= */}
@@ -338,8 +339,12 @@ export default function EnrollmentForm() {
         <Input type="date" name="dob" required onChange={handleChange} />
         <Input
           name="aadhar_number"
-          placeholder="Aadhar Number"
+          placeholder="Aadhar Number (12 Digits)"
           required
+          maxLength={12}
+          minLength={12}
+          pattern="[0-9]{12}"
+          inputMode="numeric"
           onChange={handleChange}
         />
       </Section>
@@ -348,24 +353,42 @@ export default function EnrollmentForm() {
       <Section title="Contact Details">
         <Input
           name="mobile"
-          placeholder="Mobile Number"
+          placeholder="Mobile Number (10 Digits)"
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]{10}"
+          maxLength={10}
+          minLength={10}
           required
           onChange={handleChange}
         />
+
         <Input
           name="alternate_mobile"
-          placeholder="Alternate Mobile"
+          placeholder="Alternate Mobile (10 Digits)"
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]{10}"
+          maxLength={10}
+          minLength={10}
           onChange={handleChange}
         />
+
         <Input
           name="father_mobile"
-          placeholder="Father Mobile"
+          placeholder="Father Mobile (10 Digits)"
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]{10}"
+          maxLength={10}
+          minLength={10}
           required
           onChange={handleChange}
         />
+
         <Input
           name="email"
-          placeholder="Email ID"
+          placeholder="Email ID "
           type="email"
           required
           onChange={handleChange}
@@ -380,7 +403,15 @@ export default function EnrollmentForm() {
           onChange={handleChange}
         />
         <Input name="district" placeholder="District" onChange={handleChange} />
-        <Input name="pincode" placeholder="Pin Code" onChange={handleChange} />
+        <Input
+          name="pincode"
+          placeholder="Pin Code"
+          onChange={handleChange}
+          maxLength={6}
+          minLength={6}
+          pattern="[0-9]{6}"
+          inputMode="numeric"
+        />
         <Input name="state" placeholder="State" onChange={handleChange} />
       </Section>
 
@@ -506,10 +537,11 @@ export default function EnrollmentForm() {
       </Section>
 
       {/* ================= FILE UPLOAD ================= */}
-      <Section title="Upload Documents">
+      <Section title="Upload Documents / Photos (Max Size upto 25MB)">
+        
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Passport Photo (≤200KB)
+            Passport Photo
           </label>
           <Input
             type="file"
@@ -552,7 +584,6 @@ export default function EnrollmentForm() {
             name="graduation_marksheet"
             accept="image/*,application/pdf"
             onChange={handleFileChange}
-            required
           />
         </div>
         <div>
@@ -567,17 +598,7 @@ export default function EnrollmentForm() {
             required
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Fee Screenshot (Optional)
-          </label>
-          <Input
-            type="file"
-            name="fee_screenshot"
-            accept="image/*,application/pdf"
-            onChange={handleFileChange}
-          />
-        </div>
+
         {/* <Input name="total_fee_paid" placeholder="Total Fee Paid (Optional)" onChange={handleChange} /> */}
       </Section>
 
