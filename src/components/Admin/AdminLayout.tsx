@@ -142,13 +142,6 @@ export default function AdminLayout() {
           }}
           onLogout={logout}
         />
-
-        <button
-          onClick={logout}
-          className="w-full py-3 text-red-600 hover:bg-red-50 border-t"
-        >
-          Logout
-        </button>
       </aside>
 
       {/* OVERLAY */}
