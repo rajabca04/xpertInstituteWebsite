@@ -1,44 +1,48 @@
 import { Building2, CheckCircle, BadgeCheck } from 'lucide-react';
-
 const universities = [
   {
-    name: 'Mangalayatan University',
-    location: 'Aligarh, Uttar Pradesh',
-    established: '2006',
-    accreditation: 'UGC Recognized, NAAC A+ Grade',
+    name: "Mangalayatan University",
+    location: "Aligarh, Uttar Pradesh",
+    established: "2006",
+    accreditation: "UGC Recognized, NAAC A+ Grade",
   },
   {
-    name: 'Asian Global Eduversity',
-    location: 'Panchkula, Haryana',
-    established: '2012',
-    accreditation: 'UGC Recognized (Section 2(f) UGC Act)',
+    name: "Asian Global Eduversity",
+    location: "Panchkula, Haryana",
+    established: "2012",
+    accreditation: "UGC Recognized (Section 2(f) UGC Act)",
   },
   {
-    name: 'Swami Vivekanand Subharti University',
-    location: 'Meerut, Uttar Pradesh',
-    established: '2008',
-    accreditation: 'UGC Recognized',
+    name: "Swami Vivekanand Subharti University",
+    location: "Meerut, Uttar Pradesh",
+    established: "2008",
+    accreditation: "UGC Recognized",
   },
   {
-    name: 'Ras Bihari Bose Subharti University',
-    location: 'Dehradun, Uttarakhand',
-    established: '2016',
-    accreditation: 'UGC Recognized, NAAC Accredited',
+    name: "Ras Bihari Bose Subharti University",
+    location: "Dehradun, Uttarakhand",
+    established: "2016",
+    accreditation: "UGC Recognized, NAAC Accredited",
   },
   {
-    name: 'Sikkim University',
-    location: 'Gangtok, Sikkim',
-    established: '2007',
-    accreditation: 'UGC, NAAC (Central University)',
+    name: "Sikkim University",
+    location: "Gangtok, Sikkim",
+    established: "2007",
+    accreditation: "UGC, NAAC (Central University)",
   },
   {
-    name: 'Radha Govind University',
-    location: 'Lalki Ghati, Ramgarh, Jharkhand',
-    established: '2018',
-    accreditation: 'UGC Recognized (Private University)',
+    name: "Radha Govind University",
+    location: "Ramgarh, Jharkhand",
+    established: "2018",
+    accreditation: "UGC Recognized (Private University)",
+  },
+  {
+    name: "Maulana Mazharul Haque Arabic & Persian University",
+    location: "Patna, Bihar",
+    established: "1998",
+    accreditation: "UGC Recognized (State University)",
   },
 ];
-
 
 export default function Partners() {
   return (

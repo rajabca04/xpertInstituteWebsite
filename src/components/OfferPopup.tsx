@@ -1,38 +1,40 @@
 import { X } from "lucide-react";
 import offerImage from "../Offer_poster_img/Republic-day-offer.png";
+import { useEffect, useState } from "react";
+
 interface OfferPopupProps {
   onClose: () => void;
 }
 
 export default function OfferPopup({ onClose }: OfferPopupProps) {
+  const [showClose, setShowClose] = useState(false);
+
+  // Show close button after 1 second
+  useEffect(() => {
+    const timer = setTimeout(() => setShowClose(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
-        
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-600 hover:text-red-600"
-        >
-          <X size={22} />
-        </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+      <div className="relative bg-white rounded-xl shadow-2xl max-w-sm w-full overflow-hidden">
 
         {/* Poster image */}
         <img
-          src={offerImage} 
+          src={offerImage}
           alt="Republic Day Offer"
-          className="w-full h-auto"
+          className="w-full h-full object-contain"
         />
 
-        {/* CTA
-        <div className="p-4 text-center">
-          <h3 className="text-lg font-bold text-green-700">
-            🇮🇳 Republic Day Special 🇮🇳
-          </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            Get <b>10% EXTRA DISCOUNT</b> on all courses
-          </p>
-        </div> */}
+        {/* Close button */}
+        {showClose && (
+          <button
+            onClick={onClose}
+            className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-lg hover:bg-red-100 transition"
+          >
+            <X size={28} className="text-gray-700 hover:text-red-600" />
+          </button>
+        )}
       </div>
     </div>
   );

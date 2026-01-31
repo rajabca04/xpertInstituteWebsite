@@ -64,7 +64,7 @@ The institute reserves the right to deny refunds in cases of misuse or policy vi
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gray-900 text-white pt-20 pb-8 overflow-hidden">
+    <footer  className="relative bg-gray-900 text-white pt-20 pb-8 overflow-hidden">
       {/* ✅ WATERMARK */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <h1 className="whitespace-nowrap rotate-[-8deg] text-[70px] md:text-[110px] font-extrabold text-white/5 tracking-widest select-none">
@@ -161,7 +161,7 @@ The institute reserves the right to deny refunds in cases of misuse or policy vi
               Contact Us
             </h4>
 
-            <ul className="space-y-4">
+            <ul className="space-y-4" id="contact-us">
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400 mt-1" />
                 <span className="text-gray-400">

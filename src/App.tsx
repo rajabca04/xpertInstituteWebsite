@@ -22,8 +22,8 @@ function App() {
     // const hasSeenOffer = sessionStorage.getItem("offer_seen");
 
     // if (!hasSeenOffer) {
-      setShowOffer(true);
-      // sessionStorage.setItem("offer_seen", "true");
+    setShowOffer(true);
+    // sessionStorage.setItem("offer_seen", "true");
     // }
   }, []);
 
@@ -50,10 +50,10 @@ function App() {
       {showOffer && <OfferPopup onClose={() => setShowOffer(false)} />}
       <Header />
       <Hero />
+      <Certificates />
       <Courses />
       <Partners />
       <Testimonials />
-      <Certificates />
       {/* <EnrollmentForm /> */}
       <Footer />
     </div>
