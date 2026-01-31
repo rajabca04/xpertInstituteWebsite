@@ -63,24 +63,28 @@ export default function DownloadReport() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">Download Reports</h2>
+    <div className="bg-white p-6 rounded-lg shadow w-full max-w-3xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center md:text-left">
+        Download Reports
+      </h2>
 
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 mb-6 text-center md:text-left">
         Download complete student enrollment data in Excel format.
       </p>
 
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="w-1/6 flex items-center justify-center gap-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
-      >
-        <Lock className="w-4 h-4" />
-        Get Report
-      </button>
+      <div className="flex justify-center md:justify-start">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center justify-center gap-2 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition w-full max-w-xs md:w-auto"
+        >
+          <Lock className="w-4 h-4" />
+          Get Report
+        </button>
+      </div>
 
       {/* ================= MODAL ================= */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
             <button
               onClick={() => setIsModalOpen(false)}
@@ -89,7 +93,7 @@ export default function DownloadReport() {
               <X />
             </button>
 
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <h3 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2 justify-center md:justify-start">
               <Lock className="w-5 h-5" />
               Enter Passcode
             </h3>
@@ -103,13 +107,15 @@ export default function DownloadReport() {
             />
 
             {errorMsg && (
-              <p className="text-red-600 text-sm mb-3">{errorMsg}</p>
+              <p className="text-red-600 text-sm mb-3 text-center md:text-left">
+                {errorMsg}
+              </p>
             )}
 
             <button
               onClick={handlePasscodeSubmit}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:opacity-60"
+              className="w-full flex flex-col md:flex-row items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:opacity-60"
             >
               {loading ? (
                 <>

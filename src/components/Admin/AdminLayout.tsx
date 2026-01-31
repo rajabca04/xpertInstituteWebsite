@@ -8,12 +8,10 @@ import { supabase } from "../../lib/supabase";
 
 export default function AdminLayout() {
   const [activeView, setActiveView] = useState<"students" | "report">(
-    "students",
+    "students"
   );
-
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [passcode, setPasscode] = useState("");
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -55,7 +53,7 @@ export default function AdminLayout() {
 
       localStorage.setItem(
         "admin_auth",
-        JSON.stringify({ id: data.id, time: Date.now() }),
+        JSON.stringify({ id: data.id, time: Date.now() })
       );
 
       setIsAuthorized(true);
@@ -116,10 +114,10 @@ export default function AdminLayout() {
 
   /* ================= DASHBOARD ================= */
   return (
-    <div className="flex min-h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* MOBILE MENU BUTTON */}
       <button
-        className="md:hidden fixed top-3 left-3 z-50 bg-white p-2 rounded-md shadow"
+        className="md:hidden fixed top-1 left-4 z-50 bg-transparent text-yellow-700 font-semibold p-1 rounded-md shadow"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? <X /> : <Menu />}
@@ -132,19 +130,23 @@ export default function AdminLayout() {
           transform transition-transform duration-300
           md:relative md:translate-x-0
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          flex flex-col
         `}
       >
-        <Sidebar
-          active={activeView}
-          onChange={(view) => {
-            setActiveView(view);
-            setIsSidebarOpen(false);
-          }}
-          onLogout={logout}
-        />
+        {/* Make sidebar scrollable if content is long */}
+        <div className="flex-1 overflow-y-auto">
+          <Sidebar
+            active={activeView}
+            onChange={(view) => {
+              setActiveView(view);
+              setIsSidebarOpen(false);
+            }}
+            onLogout={logout}
+          />
+        </div>
       </aside>
 
-      {/* OVERLAY */}
+      {/* OVERLAY FOR MOBILE */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-30 md:hidden"
@@ -153,7 +155,7 @@ export default function AdminLayout() {
       )}
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 p-4 md:p-6 overflow-auto">
+      <main className="flex-1 p-0 md:p-0 overflow-y-auto h-screen">
         {activeView === "students" && <StudentEnrollments />}
         {activeView === "report" && <DownloadReport />}
       </main>

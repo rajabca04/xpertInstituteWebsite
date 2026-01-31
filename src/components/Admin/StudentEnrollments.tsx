@@ -45,7 +45,7 @@ export default function StudentEnrollments() {
 
   /* 🌙 DARK MODE */
   const [dark, setDark] = useState(
-    () => localStorage.getItem("theme") === "dark",
+    () => localStorage.getItem("theme") === "dark"
   );
 
   useEffect(() => {
@@ -158,7 +158,7 @@ export default function StudentEnrollments() {
       </div>
 
       {/* LIST */}
-      <div className="px-4 sm:px-6 space-y-4">
+      <div className="px-4 sm:px-6 h-[calc(100vh-2rem)] overflow-y-auto space-y-4">
         {loading && <Loader2 className="animate-spin mx-auto" />}
 
         {students.map((s) => (
@@ -273,16 +273,19 @@ export default function StudentEnrollments() {
       </div>
 
       {/* PAGINATION */}
-      <div className="flex justify-center gap-2 p-6 flex-wrap">
+      <div className="flex justify-center gap-2 p-4 flex-wrap">
         {[...Array(pages)].map((_, i) => (
           <button
             key={i}
             onClick={() => setPage(i + 1)}
-            className={`px-3 py-1 rounded ${
-              page === i + 1
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700"
-            }`}
+            className={`
+        px-3 py-1 rounded-md font-medium transition
+        ${
+          page === i + 1
+            ? "bg-blue-600 text-white shadow"
+            : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-600"
+        }
+      `}
           >
             {i + 1}
           </button>

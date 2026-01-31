@@ -27,12 +27,13 @@ export default function Sidebar({
   return (
     <aside className="w-64 bg-blue-700 text-white flex flex-col h-full md:h-screen">
       {/* LOGO */}
-      <div className="flex items-center justify-center h-20 border-b border-blue-600 flex-shrink-0">
-        <h1 className="text-xl font-bold">Xpert Institute</h1>
+      <div className="flex items-center justify-center gap-2 h-20 border-b border-blue-600 flex-shrink-0">
+        <h1 className="text-xl font-bold">Xpert Institute </h1>
+        <p>  Admin</p>
       </div>
 
       {/* MENU */}
-      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+      <nav className="flex-1 overflow-y-auto p-2 space-y-2">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.key;
