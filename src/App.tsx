@@ -5,10 +5,10 @@ import Courses from "./components/Courses";
 import Partners from "./components/Partners";
 import Testimonials from "./components/Testimonials";
 import Certificates from "./components/Certificates";
-import EnrollmentForm from "./components/EnrollmentForm";
 import Footer from "./components/Footer";
 import OfferPopup from "./components/OfferPopup";
 import { supabase } from "./lib/supabase";
+import ChatBotWidget from "./components/ChatBotWidget";
 
 function App() {
   const [showOffer, setShowOffer] = useState(false);
@@ -17,17 +17,10 @@ function App() {
     document.title = "Xpert Institute - Quality Education & Authorized Degrees";
   }, []);
 
-  // ✅ Show popup on page load (once per session)
   useEffect(() => {
-    // const hasSeenOffer = sessionStorage.getItem("offer_seen");
-
-    // if (!hasSeenOffer) {
     setShowOffer(true);
-    // sessionStorage.setItem("offer_seen", "true");
-    // }
   }, []);
 
-  // Supabase test
   useEffect(() => {
     const testConnection = async () => {
       const { data, error } = await supabase
@@ -35,18 +28,14 @@ function App() {
         .select("*")
         .limit(1);
 
-      if (error) {
-        console.error("❌ Supabase error:", error.message);
-      } else {
-        console.log("✅ Supabase connected!", data);
-      }
+      if (error) console.error("❌ Supabase error:", error.message);
+      else console.log("✅ Supabase connected!", data);
     };
-
     testConnection();
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+     <div className="min-h-screen bg-white">
       {showOffer && <OfferPopup onClose={() => setShowOffer(false)} />}
       <Header />
       <Hero />
@@ -54,7 +43,8 @@ function App() {
       <Courses />
       <Partners />
       <Testimonials />
-      {/* <EnrollmentForm /> */}
+      {/* Chatbot Floating Widget */}
+      <ChatBotWidget />
       <Footer />
     </div>
   );
