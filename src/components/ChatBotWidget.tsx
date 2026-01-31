@@ -10,7 +10,7 @@ export default function ChatBotWidget() {
      {!isOpen && (
   <button
     onClick={() => setIsOpen(true)}
-    className="fixed bottom-5 right-5 z-50 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
+    className="fixed bottom-5 right-5 z-[9999] p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
     title="Chat with us"
   >
     <img
@@ -26,12 +26,13 @@ export default function ChatBotWidget() {
       {isOpen && (
         <div
           className="
-            fixed sm:fixed bottom-0 right-1/2 sm:right-5 translate-x-1/2 sm:translate-x-0 
-            w-[100vw] sm:w-80 md:w-[450px]
-            h-[90vh] sm:h-96 md:h-[600px]
-            bg-white rounded-t-xl sm:rounded-xl shadow-lg flex flex-col overflow-hidden
-            touch-auto -webkit-overflow-scrolling: touch
-          "
+    fixed sm:fixed bottom-0 right-1/2 sm:right-5 translate-x-1/2 sm:translate-x-0
+    w-[100vw] sm:w-80 md:w-[450px]
+    h-[80vh] sm:h-96 md:h-[600px]
+    bg-white rounded-t-xl sm:rounded-xl shadow-lg flex flex-col overflow-hidden
+    touch-auto -webkit-overflow-scrolling: touch
+    z-[9999]  /* 🔥 Make sure it's above everything */
+  "
         >
           {/* Header */}
           <div className="flex items-center justify-between bg-blue-500 text-white px-4 py-1">
